@@ -1,0 +1,140 @@
+apiVersion: ainel.dev/v0alpha1
+kind: ProjectBinding
+
+metadata:
+  id: openpd
+  description: >
+    Project binding between den317/OpenPD and the external AINEL engineering
+    operating model. OpenPD is treated as a methodology product whose durable
+    current behavior is specified through OpenSpec.
+
+ainel:
+  repository: den317/AINEL
+  ref: 8fdce08bce17aadb40a176c6e59669832a78bd15
+  mode: external-operating-model
+
+project:
+  repository: den317/OpenPD
+  type: methodology-product
+  canonical_contract:
+    - AGENTS.md
+    - README.md
+    - docs/ainel-integration.md
+
+execution:
+  specification:
+    provider: openspec
+    specs_path: openspec/specs
+    changes_path: openspec/changes
+    archive_path: openspec/changes/archive
+    openspec:
+      baseline_state: existing-system
+      current_specs_are_source_of_truth: true
+      sync_accepted_deltas_before_archive: true
+      archive_is_historical_provenance: true
+      archive_gate: >
+        archive-inside-pr after applicable artifact work and validation are
+        complete and accepted delta behavior is synchronized into current
+        specs; human maintainer merge is the final acceptance event
+
+  work_items:
+    provider: github-issues
+  delivery:
+    provider: github-pull-requests
+
+collaboration:
+  mode: individual
+  separation_of_duties: false
+  role_bindings:
+    requirements_author: maintainer-or-agent
+    system_coherence_authority: human-maintainer
+    requirements_authorization_authority: human-maintainer
+    engineering_intent_authority: human-maintainer
+    increment_accountable: human-maintainer
+    implementation_owner: maintainer-or-agent
+  review_gates:
+    engineering_change:
+      artifact: openspec-change
+      author_role: maintainer-or-agent
+      reviewer_roles:
+        - human-maintainer
+      authorization_role: human-maintainer
+      authorization_event: merge
+      merge_authority_role: human-maintainer
+      enforcement: manual
+    implementation:
+      artifact: methodology-and-specification-artifacts
+      author_role: maintainer-or-agent
+      reviewer_roles_in_order:
+        - human-maintainer
+      acceptance_authority_role: human-maintainer
+      merge_authority_role: human-maintainer
+      enforcement: manual
+
+knowledge:
+  sources:
+    - methodology
+    - docs
+    - examples
+    - templates
+  project_memory:
+    - openspec/specs
+    - methodology
+    - docs
+  context_candidates:
+    - examples
+    - templates
+    - openspec/changes/archive
+
+artifacts:
+  canonical_paths:
+    - openspec/specs
+    - methodology
+    - docs
+    - templates
+    - examples
+    - README.md
+
+verification:
+  evidence_paths:
+    - openspec/changes/*/validation.md
+    - openspec/changes/archive/*/validation.md
+  improvement_paths:
+    - docs/methodology-evolution.md
+
+memory:
+  mode: repository-native
+  durable_layers:
+    project:
+      - openspec/specs
+      - methodology
+      - docs
+    procedural:
+      - AGENTS.md
+      - docs/ainel-integration.md
+      - openspec/config.yaml
+  promotion:
+    require_reviewable_evidence: true
+
+context_generation:
+  strategy: task-relevant-subset
+  required_starting_points:
+    - AGENTS.md
+    - ainel.yaml
+    - openspec/specs
+  include_related_specs: true
+  include_active_change: true
+  include_relevant_memory: true
+  include_relevant_ainel_patterns: false
+  avoid_full_repository_by_default: true
+
+guardrails:
+  - local_repository_contract_has_precedence
+  - ainel_is_external_and_must_not_be_vendored_into_this_repository
+  - do_not_replace_local_tools_without_explicit_project_decision
+  - do_not_promote_durable_memory_without_reviewable_evidence
+  - preserve_fact_assumption_unknown_distinction
+  - human_retains_material_engineering_decisions
+  - openspec_current_specs_are_openpd_current_methodology_authority
+  - archived_changes_are_history_not_current_methodology
+  - preserve_methodology_personal_state_boundary

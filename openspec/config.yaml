@@ -1,0 +1,46 @@
+schema: spec-driven
+
+context: |
+  Project: OpenPD — Open Professional Development.
+  Mission: provide a profession-agnostic, evidence-driven operating model for
+  adaptive professional development while keeping personal and profession-specific
+  state in consumer repositories.
+
+  OpenPD is an existing methodology product. openspec/specs/ is the normative
+  Current accepted behavior. openspec/changes/ carries in-flight deltas.
+  openspec/changes/archive/ is historical rationale, design, validation and
+  provenance; archived Changes are not automatically current requirements.
+
+  Versioned documents under methodology/ are explanatory/release artifacts that
+  preserve historical semantics. They must not become a competing Current source
+  of truth. When durable behavior changes, synchronize the accepted delta into
+  openspec/specs/ before or as part of archive completion.
+
+  OpenPD consumes AINEL through ainel.yaml as an external engineering operating
+  model. The local repository contract and accepted OpenPD specs retain precedence.
+
+  Preserve the boundary between reusable methodology and personal/profession-
+  specific state. Do not promote one person's or one profession's observations
+  into universal OpenPD behavior without suitable evidence and review.
+
+rules:
+  proposal:
+    - State the professional-development or methodology-governance problem before proposing a solution.
+    - Identify the evidence, recurrent defect, consumer need, or explicit human intent motivating the change.
+    - State in-scope and out-of-scope behavior.
+    - Identify which Current capability/spec is affected or whether a new capability is introduced.
+  specs:
+    - Use MUST or SHALL for normative OpenPD behavior.
+    - Every requirement must have at least one testable Scenario.
+    - Keep profession-specific or personal state out of OpenPD Core requirements unless cross-context evidence justifies promotion.
+    - Treat openspec/specs/ as Current accepted behavior, not a historical ledger.
+    - Synchronize accepted durable deltas into Current before or as part of archive completion.
+    - Do not treat archived Changes as automatically current requirements.
+  design:
+    - Record methodology architecture, authority, migration and workflow decisions with rationale and alternatives when material.
+    - Prefer the smallest mechanism that preserves evidence quality and inspectability.
+    - Keep AINEL/OpenSpec/provider behavior distinct from OpenPD professional-development semantics.
+  tasks:
+    - Use numbered, independently verifiable tasks.
+    - Separate approved change decomposition from personal professional-development work tracked in consumer repositories.
+    - Before archive, verify applicable artifact work, validation evidence and Current-spec synchronization.
