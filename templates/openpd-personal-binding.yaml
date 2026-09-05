@@ -1,0 +1,85 @@
+apiVersion: openpd.dev/v0alpha1
+kind: PersonalDevelopmentBinding
+
+metadata:
+  id: <PERSONAL_DEVELOPMENT_SYSTEM_ID>
+  description: >
+    Binding between <PERSONAL_REPOSITORY> and the external OpenPD
+    professional-development operating model.
+
+openpd:
+  repository: den317/OpenPD
+  ref: <PINNED_OPENPD_COMMIT_OR_TAG>
+  mode: external-operating-model
+
+consumer:
+  repository: <OWNER/REPOSITORY>
+  canonical_contract:
+    - AGENTS.md
+
+professional_context:
+  profession: <PROFESSION_OR_DOMAIN>
+  current_role: <CURRENT_ROLE_OR_UNKNOWN>
+  intended_work_scope: <PATH_OR_FREEFORM_AUTHORITY_OR_REMOVE>
+
+# Map OpenPD concepts to local authorities. Paths are examples; keep useful
+# existing structures rather than reorganizing a mature repository merely to
+# match this template.
+authorities:
+  profession_context:
+    path: <profession/>
+  professional_state:
+    path: <professional-state/>
+  hypotheses:
+    path: <hypotheses/>
+  development_bets:
+    path: <bets/>
+  experiments:
+    path: <experiments/>
+  evidence:
+    path: <evidence/>
+  inspections:
+    path: <inspections/>
+  insights:
+    path: <insights/>
+
+# Optional separate context source. Remove when the personal repository itself
+# is sufficient.
+strategic_context:
+  provider: <repository|notes|external-system|none>
+  authority: <LOCATION_OR_REMOVE>
+
+# Optional profession/external evidence sources. This block does not make
+# external claims automatically relevant to the individual.
+external_context:
+  profession_sources:
+    - <SOURCE_AUTHORITY_OR_REMOVE>
+  current_research: <live-web|repository|other|none>
+
+decision_policy:
+  max_active_direction_hypotheses: 3
+  primary_development_bets: 1
+  probe_strategy: minimum-useful-evidence-producing-set
+
+inspection:
+  cadence: <quarterly|monthly|event-driven|CUSTOM>
+  allow_early_inspection_on_material_evidence: true
+
+evidence_policy:
+  require_scope: true
+  separate_observation_from_inference: true
+  absence_of_evidence_is_not_weakness: true
+  experiment_is_not_capability_proof: true
+
+methodology_feedback:
+  record_boundary_failures: true
+  do_not_auto_promote_local_practice_to_openpd_core: true
+
+guardrails:
+  - consumer_repository_is_authoritative_for_personal_state
+  - openpd_is_external_and_must_not_be_vendored_wholesale
+  - preserve_fact_evidence_inference_unknown_distinctions
+  - do_not_infer_personal_gap_directly_from_external_trend
+  - prefer_probe_before_high_commitment_when_it_can_change_the_decision
+  - preserve_historical_decision_state
+  - keep_sensitive_personal_and_employer_data_local
