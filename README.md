@@ -92,16 +92,44 @@ personal professional repository
 
 A reusable profession-specific pack (for example `openpd-hrbp`) should be extracted only after repeated use demonstrates that multiple people in the same profession need the same ontology, radar, capability model, or source structure. Do not create profession packs speculatively.
 
-## Bootstrap
+## Developing OpenPD itself
+
+OpenPD is itself developed as a methodology product using **AINEL + OpenSpec**.
+
+The repository consumes a pinned AINEL engineering operating model through [`ainel.yaml`](ainel.yaml). OpenSpec provides the durable methodology state/change lifecycle:
+
+```text
+CURRENT
+openspec/specs/
+    what OpenPD requires now
+
+CHANGE
+openspec/changes/<change>/
+    proposed / in-flight methodology delta
+
+HISTORY
+openspec/changes/archive/<dated-change>/
+    accepted historical rationale / design / validation
+```
+
+For current-state questions, [`openspec/specs/`](openspec/specs/) is the normative authority. Archived Changes are provenance, not a second Current source of truth.
+
+Material methodology changes are developed through OpenSpec Changes. OpenPD currently uses an **archive-inside-PR** convention: the PR contains synchronized intended post-merge Current plus archived Change provenance, and human maintainer merge is final acceptance.
+
+See [`docs/ainel-integration.md`](docs/ainel-integration.md) for precedence, lifecycle and bootstrap details.
+
+## Bootstrap a personal repository
 
 See [`docs/personal-repository-bootstrap.md`](docs/personal-repository-bootstrap.md).
 
-The machine-readable binding template is [`templates/openpd-personal-binding.yaml`](templates/openpd-personal-binding.yaml).
+The machine-readable consumer binding template is [`templates/openpd-personal-binding.yaml`](templates/openpd-personal-binding.yaml).
 
 ## Methodology status
 
 OpenPD starts as an **experimental operating model**. The first important validation is cross-profession use: whether the same core loop works for materially different professions without silently importing Project Management assumptions.
 
 Methodology changes should be driven by observed recurrent defects at inspection boundaries, not by rewriting the method after every unsatisfying answer.
+
+Current normative behavior is in [`openspec/specs/`](openspec/specs/). Versioned explanatory methodology artifacts remain under [`methodology/`](methodology/).
 
 See [`methodology/openpd-operating-model-v0.1.md`](methodology/openpd-operating-model-v0.1.md) and [`docs/methodology-evolution.md`](docs/methodology-evolution.md).
