@@ -14,4 +14,5 @@
 12. [x] Record Change 002 delta specification and design rationale.
 13. [x] Validate fresh-context recoverability from `openspec/specs/` without archive replay.
 14. [x] Prepare the synchronized intended post-merge Current and archive provenance in one PR.
-15. [ ] Human maintainer reviews and merges the PR, which is the final acceptance/authorization event.
+
+Human maintainer review/merge is the external acceptance gate for the completed Change and is recorded by GitHub delivery history rather than as an internal implementation task.
